@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Chi tiết đơn hàng')"></head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container mt-5">
+    <div th:if="${order == null}" class="alert alert-danger">Không tìm thấy đơn hàng.</div>
+
+    <div th:if="${order != null}">
+        <h2>Đơn hàng #<span th:text="${order.id}"></span></h2>
+        <p><strong>Ngày:</strong> <span th:text="${#temporals.format(order.createdAt,'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Trạng thái:</strong> <span th:text="${order.status}"></span></p>
+        <p><strong>Địa chỉ:</strong> <span th:text="${order.shippingAddress}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${order.email}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${order.phone}"></span></p>
+        <p><strong>Phương thức:</strong> <span th:text="${order.paymentMethod}"></span></p>
+
+                <div th:if="${param.cancelled}" class="alert alert-info">Đơn hàng đã được hủy.</div>
+
+                  <form th:if="${order.status == 'NEW' or order.status == 'PROCESSING'}"
+                      th:action="@{/orders/{id}/cancel(id=${order.id})}" method="post" class="mb-3"
+                      onsubmit="return confirm('Xác nhận hủy đơn hàng này?');">
+                        <button type="submit" class="btn btn-outline-danger">Hủy đơn hàng</button>
+                </form>
+
+                <h4>Sản phẩm</h4>
+        <table class="table">
+            <thead><tr><th>Sản phẩm</th><th>Giá</th><th>SL</th><th>Thành tiền</th></tr></thead>
+            <tbody>
+                <tr th:each="item : ${order.items}">
+                    <td th:text="${item.product.name}"></td>
+                    <td th:text="${#numbers.formatDecimal(item.price,0,'COMMA',0,'POINT')} + ' VND'"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${#numbers.formatDecimal(item.subtotal,0,'COMMA',0,'POINT')} + ' VND'"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="text-end" th:text="${#numbers.formatDecimal(order.total,0,'COMMA',0,'POINT')} + ' VND'"></h3>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
