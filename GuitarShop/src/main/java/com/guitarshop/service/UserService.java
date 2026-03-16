@@ -1,12 +1,9 @@
 package com.guitarshop.service;
 
-import com.guitarshop.model.Role;
 import com.guitarshop.model.User;
 import com.guitarshop.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -22,7 +19,16 @@ public class UserService {
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Set.of(Role.ROLE_USER));
+        return userRepository.save(user);
+    }
+
+    public User updateProfile(User user) {
+        return userRepository.save(user);
+    }
+
+    public User changePassword(User user, String rawPassword) {
+        if (rawPassword == null || rawPassword.isEmpty()) return user;
+        user.setPassword(passwordEncoder.encode(rawPassword));
         return userRepository.save(user);
     }
 

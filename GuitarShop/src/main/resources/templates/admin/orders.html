@@ -9,7 +9,7 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="fragments/admin-navbar :: adminNavbar"></div>
 
     <div class="container-fluid mt-4">
         <div class="row mb-4">
@@ -35,7 +35,9 @@
                         <tr th:each="order : ${orders}">
                             <td th:text="${order.id}"></td>
                             <td th:text="${order.user.fullName}"></td>
-                            <td th:text="'₫' + ${#numbers.formatInteger(order.total, 0)}"></td>
+                            <td>
+                                <span th:text="${#numbers.formatDecimal(order.total,0,'COMMA',0,'POINT')} + ' VND'"></span>
+                            </td>
                             <td>
                                 <span class="badge" 
                                       th:classappend="${order.status == 'NEW' ? 'bg-info' : order.status == 'PROCESSING' ? 'bg-warning' : order.status == 'SHIPPED' ? 'bg-primary' : order.status == 'COMPLETED' ? 'bg-success' : 'bg-danger'}"

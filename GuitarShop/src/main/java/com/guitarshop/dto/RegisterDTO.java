@@ -1,7 +1,6 @@
 package com.guitarshop.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
 public class RegisterDTO {
 

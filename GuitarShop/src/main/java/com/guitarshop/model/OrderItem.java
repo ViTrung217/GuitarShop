@@ -16,6 +16,11 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    // ✅ BẮT BUỘC - Reference to Product
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     // ✅ BẮT BUỘC
     private int quantity;
 
@@ -24,12 +29,28 @@ public class OrderItem {
 
     // ===== Getter / Setter =====
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -46,5 +67,12 @@ public class OrderItem {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getSubtotal() {
+        if (price == null) {
+            return BigDecimal.ZERO;
+        }
+        return price.multiply(BigDecimal.valueOf(quantity));
     }
 }

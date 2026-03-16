@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/", "/products/**",
+                                "/", "/products/**", "/product/**", "/cart/**",
                                 "/login", "/register",
-                                "/css/**", "/js/**", "/images/**", "/uploads/**"
+                                "/css/**", "/js/**", "/images/**", "/data/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

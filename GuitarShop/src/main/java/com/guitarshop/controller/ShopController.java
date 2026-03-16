@@ -18,7 +18,11 @@ public class ShopController {
     }
 
     @GetMapping("/")
-    public String shop(Model model) {
+    public String shop(org.springframework.security.core.Authentication authentication, Model model) {
+        if (authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return "redirect:/admin/dashboard";
+        }
         model.addAttribute("products", productService.findAll());
         model.addAttribute("categories", categoryService.findAll());
         return "shop/index";

@@ -2,29 +2,65 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<style>
+    .btn-link {
+        color: rgba(255,255,255,.55);
+        text-decoration: none;
+        padding: 0;
+        border: 0;
+        background: none;
+    }
+    .btn-link:hover {
+        color: rgba(255,255,255,.75);
+    }
+</style>
+
 <body>
 <nav th:fragment="navbar"
-     class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" th:href="@{/}">🎸 Guitar Shop</a>
+     class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" th:href="@{/}">🎸 Guitar Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart}"><i class="fas fa-shopping-cart"></i> Giỏ hàng</a>
+                </li>
 
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/cart}">🛒 Giỏ hàng</a>
-            </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/profile}"><i class="fas fa-user"></i> Hồ sơ</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/orders}"><i class="fas fa-history"></i> Đơn hàng</a>
+                </li>
 
-            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/admin/dashboard}">Admin</a>
-            </li>
+                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-cog"></i> Admin
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenu">
+                        <li><a class="dropdown-item" th:href="@{/admin/dashboard}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/products}"><i class="fas fa-guitar"></i> Sản phẩm</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/categories}"><i class="fas fa-list"></i> Danh mục</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/users}"><i class="fas fa-users"></i> Người dùng</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/orders}"><i class="fas fa-receipt"></i> Đơn hàng</a></li>
+                    </ul>
+                </li>
 
-            <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
-            </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="nav-link btn btn-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+                    </form>
+                </li>
 
-            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" th:href="@{/login}">Đăng nhập</a>
-            </li>
-        </ul>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}"><i class="fas fa-lock"></i> Đăng nhập</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 </body>

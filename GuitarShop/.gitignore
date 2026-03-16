@@ -11,3 +11,6 @@ build/
 
 # OS
 .DS_Store
+
+# Excel temporary lock files
+~$*.xlsx
