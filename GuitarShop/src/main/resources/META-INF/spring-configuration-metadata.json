@@ -1,0 +1,21 @@
+{
+  "properties": [
+    { "name": "spring.data.redis.host", "type": "java.lang.String" },
+    { "name": "spring.data.redis.port", "type": "java.lang.Integer" },
+    { "name": "spring.cache.type", "type": "java.lang.String" },
+    { "name": "spring.session.store-type", "type": "java.lang.String" },
+    { "name": "spring.session.redis.flush-mode", "type": "java.lang.String" },
+    { "name": "spring.session.redis.namespace", "type": "java.lang.String" },
+    { "name": "spring.kafka.bootstrap-servers", "type": "java.lang.String" },
+    { "name": "spring.kafka.template.default-topic", "type": "java.lang.String" },
+    { "name": "spring.kafka.producer.key-serializer", "type": "java.lang.String" },
+    { "name": "spring.kafka.producer.value-serializer", "type": "java.lang.String" },
+    { "name": "spring.kafka.consumer.group-id", "type": "java.lang.String" },
+    { "name": "spring.kafka.consumer.auto-offset-reset", "type": "java.lang.String" },
+    { "name": "spring.kafka.consumer.key-deserializer", "type": "java.lang.String" },
+    { "name": "spring.kafka.consumer.value-deserializer", "type": "java.lang.String" },
+    { "name": "spring.kafka.consumer.properties.spring.json.trusted.packages", "type": "java.lang.String" },
+    { "name": "spring.kafka.listener.missing-topics-fatal", "type": "java.lang.Boolean" },
+    { "name": "app.kafka.order-topic", "type": "java.lang.String" }
+  ]
+}

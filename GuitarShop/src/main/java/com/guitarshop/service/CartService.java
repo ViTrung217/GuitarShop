@@ -1,23 +1,34 @@
 package com.guitarshop.service;
 
 import com.guitarshop.model.Product;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
-public class CartService {
+@Component
+@SessionScope
+public class CartService implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final Map<Long, CartItem> cart = new HashMap<>();
 
     public void add(Product product) {
+        add(product, 1);
+    }
+
+    public void add(Product product, int quantity) {
+        if (product == null) return;
+        int qty = Math.max(1, quantity);
+
         CartItem item = cart.getOrDefault(product.getId(), new CartItem());
         item.productId = product.getId();
         item.name = product.getName();
         item.price = product.getPrice();
         item.image = product.getImagePath();
-        item.quantity++;
+        item.quantity += qty;
         cart.put(product.getId(), item);
     }
 
